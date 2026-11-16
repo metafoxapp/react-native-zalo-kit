@@ -220,7 +220,11 @@ RCT_EXTERN_METHOD(getUserProfile:(RCTPromiseResolveBlock)resolve
   if (_loginSession) {
     [self rejectLogin:_loginSession code:ZaloKitErrorLoginSuperseded message:@"logout() was called during login"];
   }
-  [[ZaloSDK sharedInstance] unauthenticate];
+  // ZaloSDK throws "initializeWithAppId: must be called first" from unauthenticate before init (e.g. logout()
+  // before any login()); without an App ID there is no Zalo session to clear anyway. Android guards the same way.
+  if ([self ensureInitialized]) {
+    [[ZaloSDK sharedInstance] unauthenticate];
+  }
   [_tokenStore clear];
 }
 
