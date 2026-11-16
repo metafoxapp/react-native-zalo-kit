@@ -60,6 +60,24 @@ static BOOL ZaloKitIsTransientError(NSInteger code) {
 
 RCT_EXPORT_MODULE()
 
+#ifndef RCT_NEW_ARCH_ENABLED
+// Old Architecture (bridge): expose the TurboModule methods below to NativeModules. With the New
+// Architecture they are reached through NativeZaloKitSpecJSI instead, so this block is compiled out.
+RCT_EXTERN__BLOCKING_SYNCHRONOUS_METHOD(getApplicationHashKey)
+RCT_EXTERN_METHOD(login:(NSString *)authType
+                  fallbackToWeb:(BOOL)fallbackToWeb
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(logout)
+RCT_EXTERN_METHOD(isAuthenticated:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(getAccessToken:(BOOL)forceRefresh
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+RCT_EXTERN_METHOD(getUserProfile:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+#endif
+
 - (instancetype)init {
   if (self = [super init]) {
     _tokenStore = [ZaloKitTokenStore new];

@@ -3,11 +3,13 @@
   "version": "6.0.0",
   "description": "Zalo SDK (login and user profile) for React Native and Expo",
   "main": "./lib/module/index.js",
-  "types": "./lib/typescript/src/index.d.ts",
+  "react-native": "./src/index.tsx",
+  "types": "./src/index.tsx",
   "exports": {
     ".": {
       "source": "./src/index.tsx",
-      "types": "./lib/typescript/src/index.d.ts",
+      "types": "./src/index.tsx",
+      "react-native": "./src/index.tsx",
       "default": "./lib/module/index.js"
     },
     "./app.plugin.js": "./app.plugin.js",
@@ -40,7 +42,6 @@
     "typecheck": "tsc && tsc -p plugin --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib plugin/build",
-    "prepare": "bob build && tsc -p plugin",
     "changeset": "node scripts/changeset.mjs",
     "version-packages": "node scripts/changeset.mjs version",
     "docs:dev": "yarn workspace react-native-zalo-kit-docs dev",
